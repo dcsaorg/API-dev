@@ -1,4 +1,4 @@
-title: Facility Location
+title: FacilityLocation
 x-stoplight:
   id: pxfqqnyxj92f2
 type: object
@@ -7,10 +7,9 @@ description: |
 properties:
   locationName:
     type: string
-    description: |-
-      The name of the location.
+    description: The name of the location.
     pattern: ^\S+(\s+\S+)*$
-    example: 'Port of Amsterdam'
+    example: Port of Amsterdam
     maxLength: 100
     x-stoplight:
       id: n4p04nfmr2lk8
@@ -19,7 +18,7 @@ properties:
     maxLength: 4
     description: |
       Discriminator used to identify this as a `Facility Location` interface
-    example: 'FACI'
+    example: FACI
   UNLocationCode:
     description: |-
       The UN Location code specifying where the place is located. The pattern used must be
@@ -32,17 +31,17 @@ properties:
       This field is **conditionally mandatory** depending on the value of the `facilityCodeListProvider` field.
   facilityCode:
     type: string
-    pattern: '^\S+(\s+\S+)*$'
+    pattern: ^\S+(\s+\S+)*$
     maxLength: 6
     description: |-
       The code used for identifying the specific facility. This code does not include the UN Location Code.
-      
+
       The definition of the code depends on the `facilityCodeListProvider`. As code list providers maintain multiple codeLists the following codeList is used:
-      
+
       - for `SMDG` - the codeList used is the [SMDG Terminal Code List](https://smdg.org/wp-content/uploads/Codelists/Terminals/SMDG-Terminal-Code-List-v20210401.xlsx) 
       - for `BIC` - the codeList used is the [BIC Facility Codes](https://www.bic-code.org/facility-codes/)
     nullable: false
-    example: 'ADT'
+    example: ADT
   facilityCodeListProvider:
     type: string
     description: |
@@ -52,8 +51,8 @@ properties:
     enum:
       - BIC
       - SMDG
-    example: 'SMDG'
+    example: SMDG
 required:
-- locationType
-- facilityCode
-- facilityCodeListProvider
+  - locationType
+  - facilityCode
+  - facilityCodeListProvider

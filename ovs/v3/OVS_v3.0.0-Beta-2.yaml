@@ -79,7 +79,7 @@ paths:
       operationId: get-v3-service-schedules
       x-stoplight:
         id: ybz96cac6pbd9
-      description: Operational Vessel Schedules operations.
+      description: "Get a list of service schedules. The result is `Vessel-Centric` - this means that the `Vessel` is in the top of the hierarchy of the response structure. A service is a heirarchical structure with the following elements:\r\n- One or more `Services` which can contain one or more `Vessels`\r\n- A `Vessel` which can call multiple `Ports` (`TransportCalls`).\r\n- A `Port` (`TransportCall`) can contain one or more `TimeStamps`.\r\n\r\nThe number of service schedules in the list can be narrowed down by providing filter parameters. The resulting payload will always include **entire voyage(s) being matched**. This means that even though a filter only matches a single `Port` in a `Voyage` or a single `Timestamp` within a `Port` in a `Voyage` - **the entire Voyage matched** is returned. If the `carrierImportVoyageNumber` of the `Port` differs from the `carrierExportVoyageNumber` of the `Port` then the **entire Voyage** for both these Voyage numbers are included.\r\n\r\nAn example of this is when `&UNLocationCode=DEHAM` is used as a filter parameter. In this case **entire Voyages** would be listed where `DEHAM` is a `Port`.\r\n\r\nBe aware that it is possible to specify filters that are mutially exclusive resulting in an empty response list. An example of this could be when both using `vesselIMONumber` and `vesselName` filters at the same time:\r\n\r\n&vesselIMONumber=9321483&vesselName=King of the Seas\r\n\r\nIf no `Vessel` exists where `vesselIMONumber` is **9321483** and `vesselName` is **King of the Seas** then the result will be an empty list\r\n\r\nIf no `startDate` filter is provided then **3 months** prior to the request data is used. If no `endDate` filters is provided then **6 months** after the request date is used."
       parameters:
         - schema:
             type: string
@@ -164,10 +164,11 @@ paths:
           name: endDate
           description: 'The end date of the period for which schedule information is requested. If a date of any Timestamp (`ATA`, `ETA` or `PTA`) inside a `PortCall` matches a date on or before (`≤`) the `endDate` the **entire Voyage**(import- and export-Voyage) matching the `PortCall` will be included in the result. All matching is done towards local Date at the place of the port call.              If this filter is not provided the default value is **6 months** after request time.              The value is populated in `ISO 8601` date format.'
         - $ref: ../../models/CommonComponents.yaml#/components/parameters/APIVersionMajor
+        - $ref: ../../models/CommonComponents.yaml#/components/parameters/Limit
 components:
   schemas:
     ServiceSchedule:
-      title: Service Schedule
+      title: ServiceSchedule
       x-stoplight:
         id: cv8wd06vesqeo
       type: object
@@ -204,7 +205,7 @@ components:
         - carrierServiceName
         - carrierServiceCode
     VesselSchedule:
-      title: Vessel Schedule
+      title: VesselSchedule
       x-stoplight:
         id: lnuefkh03k7vv
       type: object
@@ -213,7 +214,7 @@ components:
           type: string
           x-stoplight:
             id: zt5u2tpis7e77
-          description: The carrier who is in charge of the vessel operation based on the SMDG code.
+          description: "The carrier who is in charge of the vessel operation based on the SMDG code.\r\nIf not available at the moment of sharing the schedule, use `TBD` (To be defined).\r\nIn the case an operator is still using a code not from SMDG, use the available code."
           maxLength: 10
           example: HLC
         vesselIMONumber:
@@ -253,7 +254,7 @@ components:
         - vesselOperatorSMDGLinerCode
         - isDummyVessel
     TransportCall:
-      title: Transport Call
+      title: TransportCall
       x-stoplight:
         id: 3tccceczk9fkq
       type: object
@@ -309,6 +310,12 @@ components:
             - $ref: ../../models/UnLocationLocation.yaml
             - $ref: ../../models/FacilitySMDGLocation.yaml
             - $ref: ../../models/AddressLocation.yaml
+          discriminator:
+            propertyName: locationType
+            mapping:
+              UNLO: ../../models/UnLocationLocation.yaml
+              FACS: ../../models/FacilitySMDGLocation.yaml
+              ADDR: ../../models/AddressLocation.yaml
         statusCode:
           type: string
           x-stoplight:

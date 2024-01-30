@@ -1,4 +1,4 @@
-title: Facility SMDG Location
+title: FacilitySMDGLocation
 type: object
 x-stoplight:
   id: ejl7tow06gnpb
@@ -7,7 +7,7 @@ properties:
   locationName:
     type: string
     description: The name of the location.
-    example: 'Port of Amsterdam'
+    example: Port of Amsterdam
     maxLength: 100
     x-stoplight:
       id: y7928nam0f1t3
@@ -15,7 +15,7 @@ properties:
     type: string
     maxLength: 4
     description: Discriminator used to identify this as a `Facility Location` interface only using `SMDG` code list.
-    example: 'FACS'
+    example: FACS
     x-stoplight:
       id: scich3kakgvwr
   UNLocationCode:

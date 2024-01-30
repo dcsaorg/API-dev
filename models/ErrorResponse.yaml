@@ -1,4 +1,4 @@
-title: Error Response
+title: ErrorResponse
 x-stoplight:
   id: 8au4gtxv8nxpl
 type: object
@@ -59,7 +59,7 @@ properties:
     minItems: 0
     items:
       type: object
-      title: Detailed Error
+      title: DetailedError
       properties:
         errorCode:
           type: integer
@@ -99,7 +99,7 @@ properties:
           type: string
           maxLength: 100
           example: invalidData
-        erorCodeMessage:
+        errorCodeMessage:
           type: string
           maxLength: 200
           description: |

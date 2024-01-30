@@ -1,23 +1,20 @@
-title: UNLocation Location
+title: UNLocationLocation
 type: object
 x-stoplight:
   id: b85ad17f907d8
-description: |-
-  An interface used to express a location using a `Un Location Code`.
+description: An interface used to express a location using a `Un Location Code`.
 properties:
   locationName:
     type: string
-    description: |-
-      The name of the location.
+    description: The name of the location.
     pattern: ^\S+(\s+\S+)*$
-    example: 'Port of Amsterdam'
+    example: Port of Amsterdam
     maxLength: 100
   locationType:
     type: string
     maxLength: 4
-    description: |-
-      Discriminator used to identify this as a `UNLocation` location interface.
-    example: 'UNLO'
+    description: Discriminator used to identify this as a `UNLocation` location interface.
+    example: UNLO
   UNLocationCode:
     type: string
     pattern: '^[A-Z]{2}[A-Z2-9]{3}$'

@@ -1,77 +1,65 @@
-title: Address Location
+title: AddressLocation
 type: object
 x-stoplight:
   id: s3q6yalatyags
-description: |-
-  An interface used to express a location using an `Address` object.
+description: An interface used to express a location using an `Address` object.
 properties:
   locationName:
     type: string
-    description: |-
-      The name of the location.
-    example: 'Port of Amsterdam'
+    description: The name of the location.
+    example: Port of Amsterdam
     maxLength: 100
   locationType:
     type: string
     maxLength: 4
-    description: |-
-      Discriminator used to identify this as an `Address` location interface.
-    example: 'ADDR'
+    description: Discriminator used to identify this as an `Address` location interface.
+    example: ADDR
   address:
     type: object
-    description: |-
-      An object for storing address related information.
+    description: An object for storing address related information.
     required:
       - name
     properties:
       name:
         type: string
         maxLength: 100
-        description: |-
-          Name of the address.
-        example: 'John'
+        description: Name of the address.
+        example: John
       street:
         type: string
         maxLength: 100
-        description: |-
-          The name of the street of the party’s address.
-        example: 'Ruijggoordweg'
+        description: The name of the street of the party’s address.
+        example: Ruijggoordweg
       streetNumber:
         type: string
         maxLength: 50
-        description: |-
-          The number of the street of the party’s address.
+        description: The number of the street of the party’s address.
         example: '100'
       floor:
         type: string
         maxLength: 50
-        description: |-
-          The floor of the party’s street number.
-        example: 'N/A'
+        description: The floor of the party’s street number.
+        example: N/A
       postCode:
         type: string
         maxLength: 50
-        description: |-
-          The post code of the party’s address.
-        example: '1047 HM'
+        description: The post code of the party’s address.
+        example: 1047 HM
       city:
         type: string
         maxLength: 65
-        description: |-
-          The city name of the party’s address.
-        example: 'Amsterdam'
+        description: The city name of the party’s address.
+        example: Amsterdam
       stateRegion:
         type: string
         maxLength: 65
-        description: |-
-          The state/region of the party’s address.
-        example: 'North Holland'
+        description: The state/region of the party’s address.
+        example: North Holland
       country:
         type: string
         maxLength: 75
-        description: |-
-          The country of the party’s address.
-        example: 'The Netherlands'
+        description: The country of the party’s address.
+        example: The Netherlands
 required:
   - locationType
   - address
