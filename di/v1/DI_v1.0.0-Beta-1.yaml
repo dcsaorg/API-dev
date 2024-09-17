@@ -1,0 +1,126 @@
+openapi: 3.0.3
+x-stoplight:
+  id: f2442f1db7798
+info:
+  version: 1.0.0-Beta-1
+  title: DCSA OpenAPI specification for Delivery Instructions
+  description: |
+    API specification issued by DCSA.org.
+
+    For explanation of specific values or objects please refer to the [Information Model v2023.Q4](https://dcsa.org/wp-content/uploads/2024/01/DCSA-Information-Model-2023.Q4.pdf).
+    
+    This API specification does not define the allowable updates and their timing in accordance with the established business rules. Refer to the [DCSA Interface Standard for the Delivery Instructions 1.0 Beta 1](http://...) to address this. **All use cases mentioned in this API specification refer to use cases defined in the DI IFS**.
+
+    All other documents related to the Delivery Instructions publication can be found [here](https://dcsa.org/standards/delivery-instructions/)
+
+    It is possible to use the DI API as a standalone API. In that case use one of the poll endPoints:
+
+        GET /v1/delivery-instructions/{deliveryInstructionsReference}
+
+    in order to poll information about Delivery Instructions.
+
+    ### Notifications
+
+    It is possible to have notifications pushed to you whenever a change occurs in the Delivery Instructions. The format of the notification is defined by the [Delivery Instructions Notification API](https://app.swaggerhub.com/apis-docs/dcsaorg/DCSA_DI_NTF/1.0.0-Beta-1). Signing up for notifications is defined outside the scope of this API
+    specification.
+
+    ### Stats API
+
+    The Stats API offers crucial statistical information for both API providers and consumers to enhance their services and helps DCSA to understand and scale the ecosystem. We expect you to invoke the Stats API for every request made to this API. Further details can be found [here](https://developer.dcsa.org/#/http/guides/api-guides/stats-api)
+
+    For a changelog, please click [here](https://github.com/dcsaorg/DCSA-OpenAPI/tree/master/di/v1#v100B1). Please [create a GitHub issue](https://github.com/dcsaorg/DCSA-OpenAPI/issues/new) if you have any questions/comments.
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  contact:
+    name: Digital Container Shipping Association (DCSA)
+    url: 'https://dcsa.org'
+    email: info@dcsa.org
+tags:
+  - name: Delivery Instructions
+    description: |
+      The Deliver Instructions object from the Shipper
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: 'https://virtserver.swaggerhub.com/dcsaorg/DCSA_DI/1.0.0-Beta-1'
+paths:
+  '/v1/delivery-instructions/{deliveryInstructionsReference}':
+    get:
+      tags:
+        - Delivery Instructions
+      operationId: get-delivery-instructions
+      summary: Get Delivery Instructions
+      description: |
+        Retrieves the Delivery Instructions with the `deliveryInstructionsReference` in the path.
+      parameters:
+        - $ref: '#/components/parameters/deliveryInstructionsReferencePathParam'
+        - $ref: '#/components/parameters/Api-Version-Major'
+      responses:
+        '200':
+          description: Request successful
+          headers:
+            API-Version:
+              $ref: '#/components/headers/API-Version'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryInstructions'
+        default:
+          description: Unexpected error
+          headers:
+            API-Version:
+              $ref: '#/components/headers/API-Version'
+          content:
+            application/json:
+              schema:
+                $ref: ../../models/ErrorResponse.yaml
+components:
+  schemas:
+    DeliveryInstructions:
+      title: Delivery Instructions
+      x-stoplight:
+        id: v7ahbvp460y1n
+      type: object
+      description: |
+        bla bla bla
+      properties:
+        deliveryInstructionsReference:
+          type: string
+          x-stoplight:
+            id: q4k2k51a3dfyu
+          pattern: ^\S+(\s+\S+)*$
+          maxLength: 100
+          description: |
+            A set of unique characters provided by carrier to identify a `Delivery
+            Instructions`
+          example: ABC709951
+  headers:
+    API-Version:
+      schema:
+        type: string
+        example: 1.0.0
+      description: >
+        SemVer used to indicate the version of the contract (API version)
+        returned.
+  parameters:
+    deliveryInstructionsReferencePathParam:
+      in: path
+      name: deliveryInstructionsReference
+      description: |
+        The `deliveryInstructionsReference` of the Delivery Instructions to match
+      schema:
+        type: string
+        pattern: ^\S+(\s+\S+)*$
+        maxLength: 100
+      required: true
+    Api-Version-Major:
+      in: header
+      name: API-Version
+      required: false
+      schema:
+        type: string
+        example: '1'
+      description: >
+        An API-Version header **MAY** be added to the request (optional); if
+        added it **MUST** only contain the **MAJOR** version number. The
+        API-Version header **MUST** be aligned with the URI version.
