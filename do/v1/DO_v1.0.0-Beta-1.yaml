@@ -1,0 +1,116 @@
+openapi: 3.0.3
+x-stoplight:
+  id: 3873c800b7144
+info:
+  version: 1.0.0-Beta-1
+  title: DCSA OpenAPI specification for Delivery Order
+  description: |
+    API specification issued by DCSA.org.
+
+    For explanation of specific values or objects please refer to the [Information Model v2023.Q4](https://dcsa.org/wp-content/uploads/2024/01/DCSA-Information-Model-2023.Q4.pdf). This API specification does not define the allowable updates and their timing in accordance with the established business rules. Refer to the [DCSA Interface Standard for the Delivery Order 1.0 Beta 1](http://...) to address this. **All use cases mentioned in this API specification refer to use cases defined in the DO IFS**.
+
+    All other documents related to the Delivery Order publication can be found [here](https://dcsa.org/standards/delivery-order/)
+
+    It is possible to use the DI API as a standalone API. In that case use one of the poll endPoints:
+
+        GET /v1/delivery-orders/{deliveryOrderReference}
+
+    in order to poll information about Delivery Order.
+
+    ### Notifications
+    It is possible to have notifications pushed to you whenever a change occurs in the Delivery Order. The format of the notification is defined by the [Delivery Order Notification API](https://app.swaggerhub.com/apis-docs/dcsaorg/DCSA_DO_NTF/1.0.0-Beta-1). Signing up for notifications is defined outside the scope of this API specification.
+
+    ### Stats API
+    The Stats API offers crucial statistical information for both API providers and consumers to enhance their services and helps DCSA to understand and scale the ecosystem. We expect you to invoke the Stats API for every request  made to this API. Further details can be found [here](https://developer.dcsa.org/#/http/guides/api-guides/stats-api)
+
+    For a changelog, please click [here](https://github.com/dcsaorg/DCSA-OpenAPI/tree/master/do/v1#v100B1). Please [create a GitHub issue](https://github.com/dcsaorg/DCSA-OpenAPI/issues/new) if you have any questions/comments.
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  contact:
+    name: Digital Container Shipping Association (DCSA)
+    url: 'https://dcsa.org'
+    email: info@dcsa.org
+tags:
+  - name: Delivery Order
+    description: |
+      The Delivery Order object for the Shipper
+paths:
+  '/v1/delivery-order/{deliveryOrderReference}':
+    get:
+      tags:
+        - Delivery Order
+      operationId: get-delivery-order
+      summary: Get Delivery Order
+      description: |
+        Retrieves the Delivery Order with the `deliveryOrderReference` in the path.
+      parameters:
+        - $ref: '#/components/parameters/deliveryOrderReferencePathParam'
+        - $ref: '#/components/parameters/Api-Version-Major'
+      responses:
+        '200':
+          description: Request successful
+          headers:
+            API-Version:
+              $ref: '#/components/headers/API-Version'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryOrder'
+        default:
+          description: Unexpected error
+          headers:
+            API-Version:
+              $ref: '#/components/headers/API-Version'
+          content:
+            application/json:
+              schema:
+                $ref: ../../models/ErrorResponse.yaml
+components:
+  schemas:
+    DeliveryOrder:
+      title: Delivery ORder
+      x-stoplight:
+        id: 630593a60df5a
+      type: object
+      description: |
+        bla bla bla
+      properties:
+        deliveryOrderReference:
+          type: string
+          x-stoplight:
+            id: fazobdmcy0fvv
+          pattern: ^\S+(\s+\S+)*$
+          maxLength: 100
+          description: |
+            A set of unique characters provided by carrier to identify a `Delivery
+            Order`
+          example: ABC709951
+  headers:
+    API-Version:
+      schema:
+        type: string
+        example: 1.0.0
+      description: |
+        SemVer used to indicate the version of the contract (API version) returned.
+  parameters:
+    deliveryOrderReferencePathParam:
+      in: path
+      name: deliveryOrderReference
+      description: |
+        The `deliveryOrderReference` of the Delivery Order to match
+      schema:
+        $ref: 'https://api.swaggerhub.com/domains/dcsaorg/DCSA_DOMAIN/3.1.0#/components/schemas/deliveryOrderReference'
+      required: true
+    Api-Version-Major:
+      in: header
+      name: API-Version
+      required: false
+      schema:
+        type: string
+        example: '1'
+      description: |
+        An API-Version header **MAY** be added to the request (optional); if added it **MUST** only contain the **MAJOR** version number. The API-Version header **MUST** be aligned with the URI version.
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: 'https://virtserver.swaggerhub.com/dcsaorg/DCSA_DO/1.0.0-Beta-1'
