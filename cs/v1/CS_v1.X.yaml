@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: DCSA OpenAPI specification for Commercial Schedules
-  version: 1.X
+  version: 1.0.0-Extensions
   description: |
     API specification issued by [Digital Container Shipping Association (DCSA)](https://dcsa.org/).
 
@@ -24,6 +24,10 @@ info:
     `3. GET /v1/vessel-schedules # For Vessel Schedules`
 
     Visit the [DCSA Website](https://dcsa.org/standards/commercial-schedules/) to find other documentation related to the standard publication (i.e. Interface Standard, Information Model).
+
+    ### Extensions
+    This API lists all the governed extensions and how they should be used.
+    - `RoutingReference-DCSA_CS-Extension-Version` - an extension to be used in order to include the `routingReference` property to be used in the Booking API for using Point-to-Point routes
 
     ### API Design & Implementation Principles
     This API follows the guidelines defined in version 2.0 of the API Design & Implementation Principles which can be found on the [DCSA Developer page](https://developer.dcsa.org/api_design).
@@ -55,11 +59,9 @@ paths:
                   $ref: '#/components/schemas/PointToPoint'
           headers:
             API-Version:
-              schema:
-                type: string
-                example: 1.0.0
-              description: |
-                SemVer used to indicate the version of the contract (API version) returned
+              $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_CS-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_CS-Extension-Version'
             Next-Page-Cursor:
               schema:
                 type: string
@@ -75,11 +77,9 @@ paths:
           description: Bad Request
           headers:
             API-Version:
-              schema:
-                type: string
-                example: 1.0.0
-              description: |
-                SemVer used to indicate the version of the contract (API version) returned.
+              $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_CS-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_CS-Extension-Version'
           content:
             application/json:
               schema:
@@ -103,11 +103,9 @@ paths:
           description: Internal Server Error
           headers:
             API-Version:
-              schema:
-                type: string
-                example: 1.0.0
-              description: |
-                SemVer used to indicate the version of the contract (API version) returned.
+              $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_CS-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_CS-Extension-Version'
           content:
             application/json:
               schema:
@@ -249,6 +247,7 @@ paths:
           description: A server generated value to specify a specific point in a collection result, used for pagination.
           example: fE9mZnNldHw9MTAmbGltaXQ9MTA
         - $ref: '#/components/parameters/Api-Version-Major'
+        - $ref: '#/components/parameters/RoutingReference-DCSA_CS-Extension-Version-Major'
       description: |
         Provides the product offering of single or multiple estimated end-to-end route options for a shipment in the pre-booking phase. This includes point-to-point specification of all transport legs, estimated timings, estimated schedules and interdependencies between transport legs.
 
@@ -273,11 +272,7 @@ paths:
                   $ref: '#/components/schemas/PortSchedule'
           headers:
             API-Version:
-              schema:
-                type: string
-                example: 1.0.0
-              description: |
-                SemVer used to indicate the version of the contract (API version) returned.
+              $ref: '#/components/headers/API-Version'
             Next-Page-Cursor:
               schema:
                 type: string
@@ -293,11 +288,7 @@ paths:
           description: Bad Request
           headers:
             API-Version:
-              schema:
-                type: string
-                example: 1.0.0
-              description: |
-                SemVer used to indicate the version of the contract (API version) returned.
+              $ref: '#/components/headers/API-Version'
           content:
             application/json:
               schema:
@@ -321,11 +312,7 @@ paths:
           description: Internal Server Error
           headers:
             API-Version:
-              schema:
-                type: string
-                example: 1.0.0
-              description: |
-                SemVer used to indicate the version of the contract (API version) returned.
+              $ref: '#/components/headers/API-Version'
           content:
             application/json:
               schema:
@@ -411,11 +398,7 @@ paths:
                   $ref: '#/components/schemas/ServiceSchedule'
           headers:
             API-Version:
-              schema:
-                type: string
-                example: 1.0.0
-              description: |
-                SemVer used to indicate the version of the contract (API version) returned.
+              $ref: '#/components/headers/API-Version'
             Next-Page-Cursor:
               schema:
                 type: string
@@ -431,11 +414,7 @@ paths:
           description: Bad Request
           headers:
             API-Version:
-              schema:
-                type: string
-                example: 1.0.0
-              description: |
-                SemVer used to indicate the version of the contract (API version) returned.
+              $ref: '#/components/headers/API-Version'
           content:
             application/json:
               schema:
@@ -459,11 +438,7 @@ paths:
           description: Internal Server Error
           headers:
             API-Version:
-              schema:
-                type: string
-                example: 1.0.0
-              description: |
-                SemVer used to indicate the version of the contract (API version) returned.
+              $ref: '#/components/headers/API-Version'
           content:
             application/json:
               schema:
@@ -812,6 +787,15 @@ components:
           minimum: 1
           example: 1
           description: Solution number, starting with 1. Used to group and identify similar or same routings in the response as per the carrier commercial definitions.
+        routingReference:
+          type: string
+          pattern: ^\S(?:.*\S)?$
+          maxLength: 5000
+          description: |
+            A reference to be used when creating a **Booking** in the **Booking API**.
+            
+            **Condition:** This attribute is part of the `RoutingReference` DCSA API extension, which must be explicitly enabled when used by setting in the API request the HTTP header name and value `RoutingReference-DCSA_CS-Extension-Version: 1`. The API response will then contain the HTTP header name and value `RoutingReference-DCSA_CS-Extension-Version: 1.0.0`
+          example: Route123
         transitTime:
           type: integer
           description: The estimated total time in days that it takes a shipment to move from place of receipt to place of delivery. Transit time includes stop-over time during transhipments and waiting time at connection points, if applicable, thus can vary between the same locations.
@@ -1736,16 +1720,38 @@ components:
           description: A long description corresponding to the `errorCode` with additional information.
           example: Spaces not allowed in facility code
           maxLength: 5000
+  headers:
+    API-Version:
+      schema:
+        type: string
+        example: 1.0.0
+      description: |
+        SemVer used to indicate the version of the contract (API version) returned.
+    RoutingReference-DCSA_CS-Extension-Version:
+      schema:
+        type: string
+        example: 1.0.0
+      description: |
+        This header returns the version of the `routingReference` if it has been enabled in the request.
   parameters:
     Api-Version-Major:
       in: header
       name: API-Version
       required: false
+      description: |
+        An API-Version header **MAY** be added to the request (optional); if added it **MUST** only contain **MAJOR** version. API-Version header **MUST** be aligned with the URI version.
       schema:
         type: string
         example: '1'
+    RoutingReference-DCSA_CS-Extension-Version-Major:
+      in: header
+      name: RoutingReference-DCSA_CS-Extension-Version
+      required: false
       description: |
-        An API-Version header **MAY** be added to the request (optional); if added it **MUST** only contain **MAJOR** version. API-Version header **MUST** be aligned with the URI version.
+        This header enables the DCSA API extension that enables the use of the `routingReference` attribute.
+      schema:
+        type: string
+        example: '1'
 tags:
   - name: Point To Point
     description: ' '
