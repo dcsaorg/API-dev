@@ -43,6 +43,10 @@ info:
 
     **Note:** All of these endPoint is to be implemented by the consumers of the `Shipping Instructions API` and `Transport Document API` in order to receive push events.
 
+    ### Extensions
+    This API lists all the governed extensions and how they should be used.
+    - `ShippingInstructionsRequestorParty-DCSA_EBL-Extension-Version` - an extension to be used in order to include the `shippingInstructionsRequestor` as a `documentParty` in the Shipping Instructions
+
     ### API Design & Implementation Principles
     This API follows the guidelines defined in version 2.0 of the API Design & Implementation Principles which can be found on the [DCSA Developer Portal](https://developer.dcsa.org/api_design)
 
@@ -123,6 +127,7 @@ paths:
           After the status has changed to `RECEIVED` further processing can continue by provider and will be communicated via a [Shipping Instructions Notification](#/ShippingInstructionsNotification).
       parameters:
         - $ref: '#/components/parameters/Api-Version-Major'
+        - $ref: '#/components/parameters/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version-Major'
       requestBody:
         description: |
           Parameters used to create the `Shipping Instructions`
@@ -187,6 +192,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
           content:
             application/json:
               schema:
@@ -205,6 +212,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
           content:
             application/json:
               schema:
@@ -236,6 +245,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
           content:
             application/json:
               schema:
@@ -266,6 +277,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
           content:
             application/json:
               schema:
@@ -304,6 +317,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/documentReference'
         - $ref: '#/components/parameters/Api-Version-Major'
+        - $ref: '#/components/parameters/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version-Major'
       description: |
         Updates the `Shipping Instructions` with the `documentReference`. The path can contain one of a `shippingInstructionsReference` or a `transportDocumentReference`. This endPoint corresponds with **UseCase 3 - Submit updated Shipping Instructions**
 
@@ -418,6 +432,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
           content:
             application/json:
               examples:
@@ -433,6 +449,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
           content:
             application/json:
               schema:
@@ -464,6 +482,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
           content:
             application/json:
               schema:
@@ -494,6 +514,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
           content:
             application/json:
               schema:
@@ -524,6 +546,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
           content:
             application/json:
               schema:
@@ -554,6 +578,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
           content:
             application/json:
               schema:
@@ -592,6 +618,7 @@ paths:
         - $ref: '#/components/parameters/documentReference'
         - $ref: '#/components/parameters/updatedContent'
         - $ref: '#/components/parameters/Api-Version-Major'
+        - $ref: '#/components/parameters/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version-Major'
       description: |
         Retrieves the `Shipping Instructions` with the `documentReference`. The path can contain a `shippingInstructionsReference` or a `transportDocumentReference`. It is recommended to use this endPoint to `GET` data before an update is made to make sure latest version is being updated.
 
@@ -617,6 +644,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
           content:
             application/json:
               schema:
@@ -804,6 +833,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
         '404':
           description: |
             In case the consumer is requesting the content of the `UpdatedShipping Instructions`, and no update has yet been requested.
@@ -812,6 +843,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
           content:
             application/json:
               schema:
@@ -861,6 +894,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
           content:
             application/json:
               schema:
@@ -894,6 +929,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
           content:
             application/json:
               schema:
@@ -924,6 +961,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
           content:
             application/json:
               schema:
@@ -1892,6 +1931,7 @@ paths:
         **This endPoint is to be implemented by a consumer of the eBL API in order to receive Notifications**
       parameters:
         - $ref: '#/components/parameters/Api-Version-Major'
+        - $ref: '#/components/parameters/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version-Major'
       requestBody:
         description: |
           The payload used to create a [`Shipping Instructions Notification`](#/ShippingInstructionsNotification)
@@ -2106,12 +2146,16 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
         '400':
           description: |
             In case the `Notification` does not schema validate a `400` (Bad Request) is returned
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
           content:
             application/json:
               schema:
@@ -2145,6 +2189,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
           content:
             application/json:
               schema:
@@ -2176,6 +2222,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+              $ref: '#/components/headers/ShippingInstructionsRequestor-DCSA_EBL-Extension-Version'
           content:
             application/json:
               schema:
@@ -2611,6 +2659,12 @@ components:
         example: 3.0.0
       description: |
         SemVer used to indicate the version of the contract (API version) returned.
+    ShippingInstructionsRequestor-DCSA_EBL-Extension-Version:
+      schema:
+        type: string
+        example: 1.0.0
+      description: |
+        This header returns the version of the `shippingInstructionsRequestor` if it has been enabled in the request.
   parameters:
     Api-Version-Major:
       in: header
@@ -2621,6 +2675,15 @@ components:
         example: '3'
       description: |
         An API-Version header **MAY** be added to the request (optional); if added it **MUST** only contain **MAJOR** version. API-Version header **MUST** be aligned with the URI version.
+    ShippingInstructionsRequestor-DCSA_EBL-Extension-Version-Major:
+      in: header
+      name: ShippingInstructionsRequestor-DCSA_EBL-Extension-Version
+      required: false
+      description: |
+        This header enables the DCSA API extension that enables the use of the `shippingInstructionsRequestor` attribute.
+      schema:
+        type: string
+        example: '1'
     #############
     # Path params
     #############
@@ -5346,6 +5409,39 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TaxLegalReference'
+        partyContactDetails:
+          type: array
+          description: |
+            A list of contact details
+          items:
+            $ref: '#/components/schemas/PartyContactDetail'
+      required:
+        - partyName
+        - address
+
+    ShippingInstructionsRequestor:
+      type: object
+      title: Shipping Instructions Requestor
+      description: |
+        The requestor of whomever submits the `Shipping Instructions`.
+
+        **Condition:** Either the `address` or a party `identifyingCode` must be provided.
+
+        **Condition:** This attribute is part of the `ShippingInstructionsRequestor` DCSA API extension, which must be explicitly enabled when used by setting in the API request the HTTP header name and value `ShippingInstructionsRequestor-DCSA_EBL-Extension-Version: 1`. The API response will then contain the HTTP header name and value `ShippingInstructionsRequestor-DCSA_EBL-Extension-Version: 1.0.0`
+      properties:
+        partyName:
+          type: string
+          pattern: ^\S(?:.*\S)?$
+          maxLength: 70
+          description: |
+            Name of the party.
+          example: Asseco Denmark
+        address:
+          $ref: '#/components/schemas/PartyAddress'
+        identifyingCodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdentifyingCode'
         partyContactDetails:
           type: array
           description: |
@@ -8540,6 +8636,8 @@ components:
               - The order of the items in this array **MUST** be preserved as by the provider of the API.
           items:
             $ref: '#/components/schemas/NotifyParty'
+        shippingInstructionsRequestor:
+          $ref: '#/components/schemas/ShippingInstructionsRequestor'
         other:
           type: array
           description: A list of document parties that can be optionally provided in the `Shipping Instructions` and `Transport Document`.
@@ -8547,6 +8645,7 @@ components:
             $ref: '#/components/schemas/OtherDocumentParty'
       required:
         - shipper
+        - shippingInstructionsRequestor
 
     ############################
     # Document Parties House B/L
