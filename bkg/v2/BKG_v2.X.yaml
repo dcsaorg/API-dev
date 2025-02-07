@@ -3,7 +3,7 @@ servers:
   - description: SwaggerHub API Auto Mocking
     url: 'https://virtserver.swaggerhub.com/dcsaorg/DCSA_BKG/2.0.0'
 info:
-  version: 2.X
+  version: 2.0.0-Extensions
   title: DCSA Booking API
   description: |
     <h1>DCSA OpenAPI specification for the Booking process</h1>
@@ -31,6 +31,10 @@ info:
 
     **Note:** All `/v2/bookings` endPoints must be implemented by the provider.
 
+    ### Extensions
+    This API lists all the governed extensions and how they should be used.
+    - `RoutingReference-DCSA_BKG-Extension-Version` - an extension to be used in order to include the `routingReference` property to link this API to the Commercial Schedules API
+
     ### Notifications (Implemented by consumer)
     It is possible to have notifications pushed to you whenever the provider needs input and/or a state change. The format of the notification is defined by the [Booking Notification endPoint](#/BookingNotification).
 
@@ -43,7 +47,7 @@ info:
     **Note:** This endPoint is to be implemented by the consumers of the `Booking API` in order to receive push events.
 
     ### API Design & Implementation Principles
-    This API follows the guidelines defined in version 2.1 of the API Design & Implementation Principles which can be found on the [DCSA Developer page](https://developer.dcsa.org/api_design)
+    This API follows the guidelines defined in version 2.0 of the API Design & Implementation Principles which can be found on the [DCSA Developer Portal](https://developer.dcsa.org/api_design)
 
     ### Changelog and GitHub
     For a changelog please click [here](https://github.com/dcsaorg/DCSA-OpenAPI/tree/master/bkg/v2#v200). If you have any questions, feel free to [Contact Us](https://dcsa.org/get-involved/contact-us).
@@ -72,6 +76,7 @@ paths:
       operationId: create-bookings
       parameters:
         - $ref: '#/components/parameters/Api-Version-Major'
+        - $ref: '#/components/parameters/RoutingReference-DCSA_BKG-Extension-Version-Major'
       description: |
         Creates a new booking request. This endPoint corresponds with **UseCase 1 - Submit booking request**.
 
@@ -433,6 +438,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
           content:
             application/json:
               schema:
@@ -451,6 +458,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
           content:
             application/json:
               schema:
@@ -484,6 +493,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
           content:
             application/json:
               schema:
@@ -515,6 +526,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
           content:
             application/json:
               schema:
@@ -554,6 +567,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/bookingReferencePathParam'
         - $ref: '#/components/parameters/Api-Version-Major'
+        - $ref: '#/components/parameters/RoutingReference-DCSA_BKG-Extension-Version-Major'
       description: |
         Updates the `Booking Request` with the `bookingReference`. The path can contain one of `carrierBookingRequestReference` or `carrierBookingReference`. Once a Booking has been `CONFIRMED` the `carrierBookingReference` **MUST** always be used. This endPoint corresponds with one of
         - **UseCase 3 - Submit updated Booking request**
@@ -942,6 +956,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
           content:
             application/json:
               examples:
@@ -957,6 +973,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
           content:
             application/json:
               schema:
@@ -990,6 +1008,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
           content:
             application/json:
               schema:
@@ -1022,6 +1042,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
           content:
             application/json:
               schema:
@@ -1055,6 +1077,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
           content:
             application/json:
               schema:
@@ -1086,6 +1110,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
           content:
             application/json:
               schema:
@@ -1144,12 +1170,15 @@ paths:
         - $ref: '#/components/parameters/bookingReferencePathParam'
         - $ref: '#/components/parameters/amendedContent'
         - $ref: '#/components/parameters/Api-Version-Major'
+        - $ref: '#/components/parameters/RoutingReference-DCSA_BKG-Extension-Version-Major'
       responses:
         '200':
           description: Request successful
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
           content:
             application/json:
               schema:
@@ -1343,6 +1372,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
         '404':
           description: |
             In case the consumer is requesting the `Amended Booking` by calling:
@@ -1360,6 +1391,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
           content:
             application/json:
               schema:
@@ -1411,6 +1444,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
           content:
             application/json:
               schema:
@@ -1444,6 +1479,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
           content:
             application/json:
               schema:
@@ -1475,6 +1512,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
           content:
             application/json:
               schema:
@@ -1806,6 +1845,7 @@ paths:
         **This endPoint is to be implemented by a consumer of the Booking API in order to receive Notifications**
       parameters:
         - $ref: '#/components/parameters/Api-Version-Major'
+        - $ref: '#/components/parameters/RoutingReference-DCSA_BKG-Extension-Version-Major'
       requestBody:
         description: |
           The payload used to create a [`Booking Notification`](#/BookingNotification)
@@ -2145,12 +2185,16 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
         '400':
           description: |
             In case the `Notification` does not schema validate a `400` (Bad Request) is returned
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
           content:
             application/json:
               schema:
@@ -2184,6 +2228,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
           content:
             application/json:
               schema:
@@ -2215,6 +2261,8 @@ paths:
           headers:
             API-Version:
               $ref: '#/components/headers/API-Version'
+            RoutingReference-DCSA_BKG-Extension-Version:
+              $ref: '#/components/headers/RoutingReference-DCSA_BKG-Extension-Version'
           content:
             application/json:
               schema:
@@ -2252,6 +2300,12 @@ components:
         example: 2.0.0
       description: |
         SemVer used to indicate the version of the contract (API version) returned.
+    RoutingReference-DCSA_BKG-Extension-Version:
+      schema:
+        type: string
+        example: 1.0.0
+      description: |
+        This header returns the version of the `routingReference` if it has been enabled in the request.
   parameters:
     Api-Version-Major:
       in: header
@@ -2262,6 +2316,15 @@ components:
         example: '2'
       description: |
         An API-Version header **MAY** be added to the request (optional); if added it **MUST** only contain **MAJOR** version. API-Version header **MUST** be aligned with the URI version.
+    RoutingReference-DCSA_BKG-Extension-Version-Major:
+      in: header
+      name: RoutingReference-DCSA_BKG-Extension-Version
+      required: false
+      description: |
+        This header enables the DCSA API extension that enables the use of the `routingReference` attribute.
+      schema:
+        type: string
+        example: '1'
 
     #############
     # Path params
@@ -2537,7 +2600,7 @@ components:
     #########################################
     BookingFullNotification:
       type: object
-      title: Booking
+      title: Booking Full Notification
       description: |
         This property contains the booking in case the subscriber is subscribing to the `Full State Transfer` of the Booking.
 
@@ -2959,7 +3022,7 @@ components:
           description: |
             The name of a service as specified by the carrier.
 
-            **Condition:** Mandatory if `carrierExportVoyageNumber` is provided and Vessel details or `carrierServiceCode` are blank
+            **Condition:** Mandatory if `carrierExportVoyageNumber` is provided and Vessel details or `carrierServiceCode` are blank. If `routingReference` is provided - this property MUST not be provided.
           example: Great Lion Service
         carrierServiceCode:
           type: string
@@ -2968,7 +3031,7 @@ components:
           description: |
             The carrier specific code of the service for which the schedule details are published.
 
-            **Condition:** Mandatory if `carrierExportVoyageNumber` is provided and Vessel details or `carrierServiceName` are blank
+            **Condition:** Mandatory if `carrierExportVoyageNumber` is provided and Vessel details or `carrierServiceName` are blank. If `routingReference` is provided - this property MUST not be provided.
           example: FE1
         universalServiceReference:
           type: string
@@ -2977,6 +3040,8 @@ components:
           maxLength: 8
           description: |
             A global unique service reference, as per DCSA standard, agreed by VSA partners for the service. The service reference must match the regular expression pattern: `SR\d{5}[A-Z]`. The letters `SR` followed by `5 digits`, followed by a checksum-character as a capital letter from `A to Z`.
+
+            **Condition:** If `routingReference` is provided - this property MUST not be provided.
           example: SR12345A
         carrierExportVoyageNumber:
           type: string
@@ -2986,7 +3051,7 @@ components:
           description: |
             The carrier specific identifier of the export Voyage.
 
-            **Condition:** Mandatory if `expectedDepartureDate` or `expectedArrivalAtPlaceOfDeliveryStartDate` and `expectedArrivalAtPlaceOfDeliveryEndDate` is not provided.
+            **Condition:** Mandatory if `expectedDepartureDate` or `expectedArrivalAtPlaceOfDeliveryStartDate` and `expectedArrivalAtPlaceOfDeliveryEndDate` is not provided. If `routingReference` is provided - this property MUST not be provided.
         universalExportVoyageReference:
           type: string
           pattern: ^\d{2}[0-9A-Z]{2}[NEWSR]$
@@ -2998,7 +3063,33 @@ components:
             - `2 digits` for the year
             - `2 alphanumeric characters` for the sequence number of the voyage
             - `1 character` for the direction/haul (`N`orth, `E`ast, `W`est, `S`outh or `R`oundtrip).
+
+            **Condition:** If `routingReference` is provided - this property MUST not be provided.
           example: 2103N
+        routingReference:
+          type: string
+          pattern: ^\S(?:.*\S)?$
+          maxLength: 5000
+          description: |
+            A reference to a predefined `route` specified in **Commercial Schedules - Point to point**. When specifying this property - it is not needed to specify the following properties:
+              - `vessel` which includes:
+                - `vesselName`
+                - `vesselIMONumber`
+              - `carrierServiceName`
+              - `carrierServiceCode`
+              - `universalServiceReference`
+              - `carrierExportVoyageNumber`
+              - `universalExportVoyageReference`
+              - `expectedDepartureDate`
+              - `expectedArrivalAtPlaceOfDeliveryStartDate` or `expectedArrivalAtPlaceOfDeliveryEndDate`
+              - the following `locationTypeCode` in `shipmentLocations`:
+                - `PRE` (Place of Receipt)
+                - `POL` (Port of Loading)
+                - `POD` (Port of Discharge)
+                - `PDE` (Place of Delivery)
+            
+            **Condition:** This attribute is part of the `RoutingReference` DCSA API extension, which must be explicitly enabled when used by setting in the API request the HTTP header name and value `RoutingReference-DCSA_BKG-Extension-Version: 1`. The API response will then contain the HTTP header name and value `RoutingReference-DCSA_BKG-Extension-Version: 1.0.0`
+          example: Route123
         declaredValue:
           type: number
           format: float
@@ -3014,7 +3105,7 @@ components:
           description: |
             The currency used for the declared value, using the 3-character code defined by [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html).
 
-            **Condition:** Mandatory if `declaredValue` is provided
+            **Condition:** Mandatory if `declaredValue` is provided. If `declaredValue` is not provided, this field must be empty.
           example: DKK
         carrierCode:
           type: string
@@ -3060,7 +3151,7 @@ components:
           description: |
             The date when the shipment is expected to be loaded on board a vessel as provided by the shipper or its agent.
             
-            **Condition:** Mandatory if vessel/voyage/service details or `expectedArrivalAtPlaceOfDeliveryDate` is not provided.
+            **Condition:** Mandatory if vessel/voyage/service details or `expectedArrivalAtPlaceOfDeliveryDate` is not provided. If `routingReference` is provided - this property MUST not be provided.
           example: '2021-05-17'
         expectedArrivalAtPlaceOfDeliveryStartDate:
           type: string
@@ -3068,7 +3159,7 @@ components:
           description: |
             The start date (provided as a range together with `expectedArrivalAtPlaceOfDeliveryEndDate`) for when the shipment is expected to arrive at `Place Of Delivery`.
             
-            **Condition:** Mandatory if vessel/voyage/service details or `expectedDepartureDate` is not provided.
+            **Condition:** Mandatory if vessel/voyage/service details or `expectedDepartureDate` is not provided. If `routingReference` is provided - this property MUST not be provided.
           example: '2021-05-17'
         expectedArrivalAtPlaceOfDeliveryEndDate:
           type: string
@@ -3076,7 +3167,7 @@ components:
           description: |
             The end date (provided as a range together with `expectedArrivalAtPlaceOfDeliveryStartDate`) for when the shipment is expected to arrive at `Place Of Delivery`.
             
-            **Condition:** Mandatory if vessel/voyage/service details or `expectedDepartureDate` is not provided.
+            **Condition:** Mandatory if vessel/voyage/service details or `expectedDepartureDate` is not provided. If `routingReference` is provided - this property MUST not be provided.
           example: '2021-05-19'
         transportDocumentTypeCode:
           type: string
@@ -3263,7 +3354,7 @@ components:
           description: |
             The name of a service as specified by the carrier.
 
-            **Condition:** Mandatory if `carrierExportVoyageNumber` is provided and Vessel details or `carrierServiceCode` are blank
+            **Condition:** Mandatory if `carrierExportVoyageNumber` is provided and Vessel details or `carrierServiceCode` are blank. If `routingReference` is provided - this property MUST not be provided.
           example: Great Lion Service
         carrierServiceCode:
           type: string
@@ -3272,7 +3363,7 @@ components:
           description: |
             The carrier specific code of the service for which the schedule details are published.
 
-            **Condition:** Mandatory if `carrierExportVoyageNumber` is provided and Vessel details or `carrierServiceName` are blank
+            **Condition:** Mandatory if `carrierExportVoyageNumber` is provided and Vessel details or `carrierServiceName` are blank. If `routingReference` is provided - this property MUST not be provided.
           example: FE1
         universalServiceReference:
           type: string
@@ -3281,6 +3372,8 @@ components:
           maxLength: 8
           description: |
             A global unique service reference, as per DCSA standard, agreed by VSA partners for the service. The service reference must match the regular expression pattern: `SR\d{5}[A-Z]`. The letters `SR` followed by `5 digits`, followed by a checksum-character as a capital letter from `A to Z`.
+
+            **Condition:** If `routingReference` is provided - this property MUST not be provided.
           example: SR12345A
         carrierExportVoyageNumber:
           type: string
@@ -3290,7 +3383,7 @@ components:
           description: |
             The carrier specific identifier of the export Voyage.
 
-            **Condition:** Mandatory if `expectedDepartureDate` or `expectedArrivalAtPlaceOfDeliveryStartDate` and `expectedArrivalAtPlaceOfDeliveryEndDate` is not provided.
+            **Condition:** Mandatory if `expectedDepartureDate` or `expectedArrivalAtPlaceOfDeliveryStartDate` and `expectedArrivalAtPlaceOfDeliveryEndDate` is not provided. If `routingReference` is provided - this property MUST not be provided.
         universalExportVoyageReference:
           type: string
           pattern: ^\d{2}[0-9A-Z]{2}[NEWSR]$
@@ -3301,7 +3394,33 @@ components:
             - `2 digits` for the year
             - `2 alphanumeric characters` for the sequence number of the voyage
             - `1 character` for the direction/haul (`N`orth, `E`ast, `W`est, `S`outh or `R`oundtrip).
+
+            **Condition:** If `routingReference` is provided - this property MUST not be provided.
           example: 2103N
+        routingReference:
+          type: string
+          pattern: ^\S(?:.*\S)?$
+          maxLength: 100
+          description: |
+            A reference to a predefined `route` specified in **Commercial Schedules - Point to point**. When specifying this property - it is not needed to specify the following properties:
+              - `vessel` which includes:
+                - `vesselName`
+                - `vesselIMONumber`
+              - `carrierServiceName`
+              - `carrierServiceCode`
+              - `universalServiceReference`
+              - `carrierExportVoyageNumber`
+              - `universalExportVoyageReference`
+              - `expectedDepartureDate`
+              - `expectedArrivalAtPlaceOfDeliveryStartDate` or `expectedArrivalAtPlaceOfDeliveryEndDate`
+              - the following `locationTypeCode` in `shipmentLocations`:
+                - `PRE` (Place of Receipt)
+                - `POL` (Port of Loading)
+                - `POD` (Port of Discharge)
+                - `PDE` (Place of Delivery)
+            
+            **Condition:** Using this property is an extension to the official **DCSA Booking v2.0.0** API. In order to use this property the following header attribute **MUST** be added to all requests (and responses): `DCSA_CS-routing_indicator` with a value of `1.0.0`
+          example: Route123
         declaredValue:
           type: number
           format: float
@@ -3317,7 +3436,7 @@ components:
           description: |
             The currency used for the declared value, using the 3-character code defined by [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html).
 
-            **Condition:** Mandatory if `declaredValue` is provided
+            **Condition:** Mandatory if `declaredValue` is provided. If `declaredValue` is not provided, this field must be empty.
           example: DKK
         carrierCode:
           type: string
@@ -3363,7 +3482,7 @@ components:
           description: |
             The date when the shipment is expected to be loaded on board a vessel as provided by the shipper or its agent.
             
-            **Condition:** Mandatory if vessel/voyage/service details or `expectedArrivalAtPlaceOfDeliveryDate` is not provided.
+            **Condition:** Mandatory if vessel/voyage/service details or `expectedArrivalAtPlaceOfDeliveryDate` is not provided. If `routingReference` is provided - this property MUST not be provided.
           example: '2021-05-17'
         expectedArrivalAtPlaceOfDeliveryStartDate:
           type: string
@@ -3371,7 +3490,7 @@ components:
           description: |
             The start date (provided as a range together with `expectedArrivalAtPlaceOfDeliveryEndDate`) for when the shipment is expected to arrive at `Place Of Delivery`.
             
-            **Condition:** Mandatory if vessel/voyage/service details or `expectedDepartureDate` is not provided.
+            **Condition:** Mandatory if vessel/voyage/service details or `expectedDepartureDate` is not provided. If `routingReference` is provided - this property MUST not be provided.
           example: '2021-05-17'
         expectedArrivalAtPlaceOfDeliveryEndDate:
           type: string
@@ -3379,7 +3498,7 @@ components:
           description: |
             The end date (provided as a range together with `expectedArrivalAtPlaceOfDeliveryStartDate`) for when the shipment is expected to arrive at `Place Of Delivery`.
             
-            **Condition:** Mandatory if vessel/voyage/service details or `expectedDepartureDate` is not provided.
+            **Condition:** Mandatory if vessel/voyage/service details or `expectedDepartureDate` is not provided. If `routingReference` is provided - this property MUST not be provided.
           example: '2021-05-19'
         transportDocumentTypeCode:
           type: string
@@ -3470,7 +3589,7 @@ components:
 
     DocumentPartiesReq:
       type: object
-      title: Document Parties
+      title: Document Parties (Shipper)
       description: |
         All `Parties` with associated roles.
       properties:
@@ -3633,7 +3752,7 @@ components:
           description: |
             The name of a service as specified by the carrier.
 
-            **Condition:** Mandatory if `carrierExportVoyageNumber` is provided and Vessel details or `carrierServiceCode` are blank
+            **Condition:** Mandatory if `carrierExportVoyageNumber` is provided and Vessel details or `carrierServiceCode` are blank. If `routingReference` is provided - this property MUST not be provided.
           example: Great Lion Service
         carrierServiceCode:
           type: string
@@ -3642,7 +3761,7 @@ components:
           description: |
             The carrier specific code of the service for which the schedule details are published.
 
-            **Condition:** Mandatory if `carrierExportVoyageNumber` is provided and Vessel details or `carrierServiceName` are blank
+            **Condition:** Mandatory if `carrierExportVoyageNumber` is provided and Vessel details or `carrierServiceName` are blank. If `routingReference` is provided - this property MUST not be provided.
           example: FE1
         universalServiceReference:
           type: string
@@ -3651,6 +3770,8 @@ components:
           minLength: 8
           description: |
             A global unique service reference, as per DCSA standard, agreed by VSA partners for the service. The service reference must match the regular expression pattern: `SR\d{5}[A-Z]`. The letters `SR` followed by `5 digits`, followed by a checksum-character as a capital letter from `A to Z`.
+
+            **Condition:** If `routingReference` is provided - this property MUST not be provided.
           example: SR12345A
         carrierExportVoyageNumber:
           type: string
@@ -3660,7 +3781,7 @@ components:
           description: |
             The carrier specific identifier of the export Voyage.
 
-            **Condition:** Mandatory if `expectedDepartureDate` or `expectedArrivalAtPlaceOfDeliveryStartDate` and `expectedArrivalAtPlaceOfDeliveryEndDate` is not provided.
+            **Condition:** Mandatory if `expectedDepartureDate` or `expectedArrivalAtPlaceOfDeliveryStartDate` and `expectedArrivalAtPlaceOfDeliveryEndDate` is not provided. If `routingReference` is provided - this property MUST not be provided.
         universalExportVoyageReference:
           type: string
           pattern: ^\d{2}[0-9A-Z]{2}[NEWSR]$
@@ -3671,7 +3792,33 @@ components:
             - `2 digits` for the year
             - `2 alphanumeric characters` for the sequence number of the voyage
             - `1 character` for the direction/haul (`N`orth, `E`ast, `W`est, `S`outh or `R`oundtrip).
+
+            **Condition:** If `routingReference` is provided - this property MUST not be provided.
           example: 2103N
+        routingReference:
+          type: string
+          pattern: ^\S(?:.*\S)?$
+          maxLength: 100
+          description: |
+            A reference to a predefined `route` specified in **Commercial Schedules - Point to point**. When specifying this property - it is not needed to specify the following properties:
+              - `vessel` which includes:
+                - `vesselName`
+                - `vesselIMONumber`
+              - `carrierServiceName`
+              - `carrierServiceCode`
+              - `universalServiceReference`
+              - `carrierExportVoyageNumber`
+              - `universalExportVoyageReference`
+              - `expectedDepartureDate`
+              - `expectedArrivalAtPlaceOfDeliveryStartDate` or `expectedArrivalAtPlaceOfDeliveryEndDate`
+              - the following `locationTypeCode` in `shipmentLocations`:
+                - `PRE` (Place of Receipt)
+                - `POL` (Port of Loading)
+                - `POD` (Port of Discharge)
+                - `PDE` (Place of Delivery)
+            
+            **Condition:** Using this property is an extension to the official **DCSA Booking v2.0.0** API. In order to use this property the following header attribute **MUST** be added to all requests (and responses): `DCSA_CS-routing_indicator` with a value of `1.0.0`
+          example: Route123
         declaredValue:
           type: number
           format: float
@@ -3687,7 +3834,7 @@ components:
           description: |
             The currency used for the declared value, using the 3-character code defined by [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html).
 
-            **Condition:** Mandatory if `declaredValue` is provided
+            **Condition:** Mandatory if `declaredValue` is provided. If `declaredValue` is not provided, this field must be empty.
           example: DKK
         carrierCode:
           type: string
@@ -3733,7 +3880,7 @@ components:
           description: |
             The date when the shipment is expected to be loaded on board a vessel as provided by the shipper or its agent.
             
-            **Condition:** Mandatory if vessel/voyage/service details or `expectedArrivalAtPlaceOfDeliveryDate` is not provided.
+            **Condition:** Mandatory if vessel/voyage/service details or `expectedArrivalAtPlaceOfDeliveryDate` is not provided. If `routingReference` is provided - this property MUST not be provided.
           example: '2021-05-17'
         expectedArrivalAtPlaceOfDeliveryStartDate:
           type: string
@@ -3741,7 +3888,7 @@ components:
           description: |
             The start date (provided as a range together with `expectedArrivalAtPlaceOfDeliveryEndDate`) for when the shipment is expected to arrive at `Place Of Delivery`.
             
-            **Condition:** Mandatory if vessel/voyage/service details or `expectedDepartureDate` is not provided.
+            **Condition:** Mandatory if vessel/voyage/service details or `expectedDepartureDate` is not provided. If `routingReference` is provided - this property MUST not be provided.
           example: '2021-05-17'
         expectedArrivalAtPlaceOfDeliveryEndDate:
           type: string
@@ -3749,7 +3896,7 @@ components:
           description: |
             The end date (provided as a range together with `expectedArrivalAtPlaceOfDeliveryStartDate`) for when the shipment is expected to arrive at `Place Of Delivery`.
             
-            **Condition:** Mandatory if vessel/voyage/service details or `expectedDepartureDate` is not provided.
+            **Condition:** Mandatory if vessel/voyage/service details or `expectedDepartureDate` is not provided. If `routingReference` is provided - this property MUST not be provided.
           example: '2021-05-19'
         transportDocumentTypeCode:
           type: string
@@ -4018,7 +4165,7 @@ components:
             - `CEL` (Celsius)
             - `FAH` (Fahrenheit)
 
-            **Condition:** Mandatory to provide if `temperatureSetpoint` is provided
+            **Condition:** Mandatory if `temperatureSetpoint` is provided. If `temperatureSetpoint` is not provided, this field must be empty.
           enum:
             - CEL
             - FAH
@@ -4061,7 +4208,7 @@ components:
             - `MQH` (Cubic metre per hour)
             - `FQH` (Cubic foot per hour)
 
-            **Condition:** Mandatory to provide if `airExchange` is provided
+            **Condition:** Mandatory if `airExchange` is provided. If `airExchange` is not provided, this field must be empty.
           enum:
             - MQH
             - FQH
@@ -4728,6 +4875,8 @@ components:
       title: Shipment Location
       description: |
         Maps the relationship between `Shipment` and `Location`, e.g., the `Place of Receipt` and the `Place of Delivery` for a specific shipment. This is a reusable object between `Booking` and `Transport Document`
+
+        **Condition:** In case `routingReference` is provided - then `PRE` (Place of Receipt), `POL` (Port of Loading), `POD` (Port of Discharge) and `PDE` (Place of Delivery) MUST not be provided.
       properties:
         location:
           $ref: '#/components/schemas/Location'
@@ -6556,7 +6705,7 @@ components:
       description: |
         Vessels related to this booking request.
         
-        **Condition:** Mandatory if `carrierExportVoyageNumber` is provided and `carrierServiceCode` or `carrierServiceName` are blank.
+        **Condition:** Mandatory if `carrierExportVoyageNumber` is provided and `carrierServiceCode` or `carrierServiceName` are blank. If `routingReference` is provided - this object MUST not be provided.
       required:
         - name
       properties:
